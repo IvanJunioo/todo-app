@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +33,10 @@ public class AppController {
     ) {
         if (form.getName() == null) {
             throw new IllegalArgumentException("Task name cannot be empty");
+        }
+
+        if (form.getDeadline().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Task deadline cannot be in the past");
         }
 
         appService.createTask(
