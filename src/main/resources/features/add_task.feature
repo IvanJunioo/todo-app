@@ -5,7 +5,7 @@ Feature: Adding a task
 
     Scenario: Adding an empty task is invalid
         Given empty task name
-        When I try to add this task
+        When I add this task
         Then it should not work
 
     Scenario: Adding a task should initially be TODO

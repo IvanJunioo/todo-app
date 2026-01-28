@@ -33,7 +33,7 @@ public class Task {
     public Integer getId() {return this.id;}
     public String getName() {return this.name;}
     public String getDescription() {return this.description;}
-    public String getDeadline() {return this.deadline.toString();}
+    public LocalDate getDeadline() {return this.deadline;}
     public TaskStatus getStatus() {return this.status;}
 
     // setters
