@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:htmx="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tasks</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+    <h1>Add a Task</h1>
+    <form hx-post="/tasks" hx-target="#tasksList" hx-swap="innerHTML"
+          hx-on="htmx:afterRequest: this.reset()">
+        <label>
+            <input type="text" name="name" placeholder="Task name" required>
+        </label>
+        <label>
+            <input type="date" name="deadline" placeholder="Deadline" required>
+        </label>
+        <label>
+            <input type="text" name="description" placeholder="Description">
+        </label>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <section id="tasksList">
+        <h1>To-Do List</h1>
+        <table id="todo-tasks">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task: ${todoTasks}">
+                <td>
+                    <span th:text="${task.name}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.status}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.deadline}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.description}"></span>
+                </td>
+                <td>
+                    <button
+                        hx-post="/tasks/{id}/done"
+                        th:attr="hx-post=@{/tasks/{id}/done(id=${task.id})}"
+                        hx-target="#tasksList"
+                        hx-swap="innerHTML">
+                        Mark as Done
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h1>Finished Tasks</h1>
+        <table id="done-tasks">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task: ${doneTasks}">
+                <td>
+                    <span th:text="${task.name}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.status}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.deadline}"></span>
+                </td>
+                <td>
+                    <span th:text="${task.description}"></span>
+                </td>
+                <td>
+                    <button
+                        hx-post="/tasks/{id}/not-done"
+                        th:attr="hx-post=@{/tasks/{id}/not-done(id=${task.id})}"
+                        hx-target="#tasksList"
+                        hx-swap="innerHTML">
+                        Mark as Not Done
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

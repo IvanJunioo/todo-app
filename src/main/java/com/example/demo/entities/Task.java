@@ -30,8 +30,15 @@ public class Task {
     }
 
     // getters
+    public Integer getId() {return this.id;}
     public String getName() {return this.name;}
     public String getDescription() {return this.description;}
     public String getDeadline() {return this.deadline.toString();}
-    public String getStatus() {return this.status.toString();}
+    public TaskStatus getStatus() {return this.status;}
+
+    // setters
+    public void setStatus(TaskStatus status) {
+        assert status != null;
+        this.status = status;
+    }
 }
